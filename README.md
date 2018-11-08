@@ -12,8 +12,8 @@ A single page app for submitting a case. The original intent of this component w
   2. Add the CaseIntake VisualForce page to the Force.com Site of your community
      - Community Workspace > Administration > Pages > Go to Force.com
      - Add "CaseIntake" to the Site Visualforce Pages section
-  3. Access the page using URL format: <community-base-URL>/CaseIntake
-     - Example for my development community: https://th-dev-developer-edition.na40.force.com/dev/CaseIntake
+  3. Access the page using URL format: https://community-base-URL/CaseIntake
+     - Example for my development ('dev') community: https://th-dev-developer-edition.na40.force.com/dev/CaseIntake
 
 <b>Sample screen here:</b>
 
