@@ -9,7 +9,7 @@ Input form includes 3 primary sections:
  
 To deploy and use this component:
   1. Deploy the component to your org using "Deploy to Salesforce" button below
-  2. Add the CaseIntake VisualForce page to the Guest User Profile of your community
+  2. Add the CaseIntake VisualForce page to the Force.com Site of your community
      - Community Workspace > Administration > Pages > Go to Force.com
      - Add "CaseIntake" to the Site Visualforce Pages section
   3. Access the page using URL format: <community-base-URL>/CaseIntake
