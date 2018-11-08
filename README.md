@@ -9,6 +9,7 @@ Input form includes 3 primary sections:
   
 Sample screen here:
 
+<div style="border: 1px solid red;">
 <img src="PSCaseIntake.png"></img>
 
 <a href="https://githubsfdeploy.herokuapp.com">
