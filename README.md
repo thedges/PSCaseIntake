@@ -9,8 +9,9 @@ Input form includes 3 primary sections:
   
 Sample screen here:
 
-<div style="border: 1px solid red;">
+<div style="border: 1px solid blue;">
 <img src="PSCaseIntake.png"></img>
+</div>
 
 <a href="https://githubsfdeploy.herokuapp.com">
   <img alt="Deploy to Salesforce"
