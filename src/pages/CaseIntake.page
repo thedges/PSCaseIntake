@@ -1,0 +1,18 @@
+<apex:page showHeader="false" standardStylesheets="false">
+<apex:includeLightning />
+<div id="app" />
+<script>
+        $Lightning.use("c:PSCaseIntake",
+            function(){
+                $Lightning.createComponent(
+                "c:PSCaseIntakeCmp",
+                    {},
+                    "app",
+                    function(cmp){
+                    console.log('done');
+                    }
+                );
+            }
+        );
+    </script>
+</apex:page>

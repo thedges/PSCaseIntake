@@ -1,0 +1,129 @@
+<aura:component controller="PSCaseIntakeCmpController" implements="force:appHostable,forceCommunity:availableForAllPageTypes,flexipage:availableForAllPageTypes" access="global">
+    <ltng:require styles="{!$Resource.leaflet_1_0_2 + '/leaflet.css'}" scripts="{!$Resource.leaflet_1_0_2 + '/leaflet.js'}" afterScriptsLoaded="{!c.jsLoaded}" />
+    
+    <aura:handler name="init" value="{!this}" action="{!c.doInit}" />
+    
+    <aura:attribute name="caseNumber" type="String" default="" />
+    
+    <aura:attribute name="autoCenter" type="String" default="true" />
+    <aura:attribute name="mapCenterLat" type="String" default="30.267811" />
+    <aura:attribute name="mapCenterLng" type="String" default="-97.744328" />
+    <aura:attribute name="mapZoomLevel" type="Integer" default="11" />
+    
+    <aura:attribute name="errorMsg" type="String" />
+    <aura:attribute name="saveResult" type="String" />
+    <aura:attribute name="Spinner" type="Boolean" default="false" />
+    
+    <aura:attribute name="latitude" type="Decimal" />
+    <aura:attribute name="longitude" type="Decimal" />
+    <aura:attribute name="address" type="String" />
+    <aura:attribute name="addressField" type="String" default="Address__c" />
+    <aura:attribute name="street" type="String" />
+    <aura:attribute name="streetField" type="String"  default="Street__c"/>
+    <aura:attribute name="city" type="String" />
+    <aura:attribute name="cityField" type="String"  default="City__c"/>
+    <aura:attribute name="state" type="String" />
+    <aura:attribute name="stateField" type="String"  default="State__c"/>
+    <aura:attribute name="postal" type="String" />
+    <aura:attribute name="postalField" type="String"  default="Postal__c"/>
+    <aura:attribute name="subject" type="String" />
+    <aura:attribute name="description" type="String" />
+    <aura:attribute name="type" type="String" />
+    <aura:attribute name="subtype" type="String" />
+    <aura:attribute name="recordTypeId" type="String" default=""/>
+    <aura:attribute name="myDomain" type="String" default=""/>
+    
+    <aura:attribute name="firstName" type="String" />
+    <aura:attribute name="lastName" type="String" />
+    <aura:attribute name="email" type="String" />
+    <aura:attribute name="phone" type="String" />
+    
+    <aura:attribute name="typeList" type="List" />
+    <aura:attribute name="subtypeList" type="List" />
+    
+    <aura:attribute name="runtimeEnv" type="Object" />
+    <aura:attribute name="map" type="Object" />
+    
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" />
+    <div aura:id="mainapp">
+        <aura:if isTrue="{!v.errorMsg.length > 0}">
+            <ui:message title="Error" severity="error" closable="true">
+                {!v.errorMsg}
+            </ui:message>
+        </aura:if>
+        <aura:if isTrue="{!v.caseNumber.length == 0}">
+          <div aura:id="container">
+            
+            <div class="slds-grid slds-wrap slds-grid--pull-padded">
+                <div class="slds-col--padded-medium slds-size--1-of-1">
+                    <lightning:card iconName="action:add_contact">
+                        <aura:set attribute="title">
+                            Provide Contact Details
+                        </aura:set>
+                        
+                        <p class="slds-p-horizontal--small">
+                            <lightning:input aura:id="firstName" type="text" name="FirstName" label="First Name" value="{!v.firstName}" required="true" />
+                            <lightning:input aura:id="lastName" type="text" name="LastName" label="Last Name" value="{!v.lastName}" required="true" />
+                            <lightning:input aura:id="email" type="text" name="Email" label="E-mail" value="{!v.email}" required="true" />
+                            <lightning:input aura:id="phone" type="Telephone" name="Phone" label="Phone" value="{!v.phone}" required="true" pattern="[0-9]{3}-[0-9]{3}-[0-9]{4}"/>
+                        </p>
+                    </lightning:card>
+                    <!--
+                    <lightning:card iconName="action:edit">
+                        <aura:set attribute="title">
+                            Issue Type
+                        </aura:set>
+                        <p class="slds-p-horizontal-small">
+
+                        </p>
+                    </lightning:card>
+                    -->
+                    <lightning:card iconName="action:description">
+                        <aura:set attribute="title">
+                            Description
+                        </aura:set>
+                        <p class="slds-p-horizontal--small">
+                                <lightning:select name="typeSelect" label="Select issue type" value="{!v.type}" onchange="{!c.onTypeChange}">
+                                        <aura:iteration items="{!v.typeList}" var="type">
+                                            <option value="{!type}">{!type}</option>
+                                        </aura:iteration>
+                                    </lightning:select>
+                                    <aura:renderIf isTrue="{!and(v.subtypeList != null, v.subtypeList.length > 0)}">
+                                        <lightning:select name="subtypeSelect" label="Select issue sub-type" value="{!v.subtype}" onchange="{!c.onTypeChange}">
+                                            <aura:iteration items="{!v.subtypeList}" var="subtype">
+                                                <option value="{!subtype}">{!subtype}</option>
+                                            </aura:iteration>
+                                        </lightning:select>
+                                    </aura:renderIf>
+                            <lightning:input aura:id="subject" type="text" name="Subject" label="Subject" value="{!v.subject}" required="true" />
+                            <lightning:textarea aura:id="description" name="Describe the issue" label="Describe the issue in detail." value="{!v.description}" maxlength="500" />
+                        </p>
+                    </lightning:card>
+
+                    <lightning:card iconName="action:map">
+                        <aura:set attribute="title">
+                            Location
+                        </aura:set>
+                        <p class="slds-p-horizontal--small">
+                            <div aura:id="map" class="map" id="map" style="position: relative; height: 370px;"></div>
+                            <div align="center" style="font-family: Times New Roman, Times, serif; font-size: 20px;">{!v.address}</div>
+                        </p>
+                    </lightning:card>
+                </div>
+            </div>
+            <br/>
+            <div>
+                <lightning:button aura:id="Submit" label="Submit" onclick="{!c.handleSubmit}" />
+            </div>
+            
+        </div>
+        </aura:if>
+        <aura:if isTrue="{!v.caseNumber.length != 0}">
+            <div align="center" style="font-size: 150%">
+            <p>Your case has been submitted and assigned case number {!v.caseNumber}.</p>
+            <br/>    
+            <p>For any questions, please contact NYC PD at 616-610-5000 and have your case number.  Other contact numbers can be accessed <a href="https://www1.nyc.gov/site/nypd/about/about-nypd/contact-us.page">here</a>.</p>
+            </div>
+        </aura:if>
+    </div>
+</aura:component>
