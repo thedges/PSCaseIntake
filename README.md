@@ -1,5 +1,7 @@
 # PSCaseIntake
 
+THIS SOFTWARE IS COVERED BY [THIS DISCLAIMER](https://raw.githubusercontent.com/thedges/Disclaimer/master/disclaimer.txt).
+
 A single page app for submitting a case. The original intent of this component was to provide a non-authenticated mobile page to submit cases. The layout currently is not optimized for desktop. This component utilizes Lightning Out to expose a Lightning Component in a non-authenticated page and requires wrapping in a VisualForce page. 
 
 <b>Input form includes 3 primary sections:</b>
