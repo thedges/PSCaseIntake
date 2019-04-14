@@ -14,6 +14,15 @@
         <name>AuraDefinitionBundle</name>
     </types>
     <types>
+        <members>Case.Address__c</members>
+        <members>Case.City__c</members>
+        <members>Case.Location__c</members>
+        <members>Case.Postal__c</members>
+        <members>Case.State__c</members>
+        <members>Case.Street__c</members>
+        <name>CustomField</name>
+    </types>
+    <types>
         <members>leaflet_1_0_2</members>
         <members>mapCrosshair</members>
         <name>StaticResource</name>
